@@ -43,16 +43,16 @@ class UserController extends Controller
     }
     public function store(Request $request)
     {
-        // $this->validate($request,[
-        //     'name'=>'required',
-        //     'email'=>'required|email',
-        //     'phone'=>'required',
-        //     'dni'=>'required',
-        //     //'code_of_city'=>'required',
-           // 'date_of_birth'=>'required',
-        //     'password'=>'required|confirmed',
-        // ]);
-        dd($request->all());
+        $this->validate($request,[
+            'name'=>'required',
+            'email'=>'required|email',
+            'phone'=>'required',
+            'dni'=>'required',
+            'code_of_city'=>'required',
+           'date_of_birth'=>'required',
+            'password'=>'required',
+        ]);
+        
         $users= New User();
         $users->name=$request->input('name');
         $users->email=$request->input('email');

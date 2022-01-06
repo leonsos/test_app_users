@@ -19,14 +19,23 @@
                           <label for="inputEmail4" class="form-label">Name</label>
                           <input type="text" class="form-control" id="inputEmail4" name="name">
                         </div>
+                        @error('name')
+                              <div class="invalid-feedback"> {{ $message }} </div>
+                          @enderror
                         <div class="col-md-6">
                           <label for="inputPassword4" class="form-label">Email</label>
                           <input type="email" class="form-control" id="inputPassword4" name="email">
                         </div>
+                        @error('email')
+                              <div class="invalid-feedback"> {{ $message }} </div>
+                          @enderror
                         <div class="col-md-6">
                             <label for="inputEmail4" class="form-label">Password</label>
                             <input type="password" class="form-control" id="inputEmail4" name="password">
                           </div>
+                          @error('password')
+                              <div class="invalid-feedback"> {{ $message }} </div>
+                          @enderror
                           <div class="col-md-6">
                             <label for="inputPassword4" class="form-label">Password confirm</label>
                             <input type="password" name="password_confirm" class="form-control" id="inputPassword4">
@@ -35,10 +44,16 @@
                             <label for="inputEmail4" class="form-label">Phone</label>
                             <input type="text" class="form-control" id="inputEmail4" name="phone">
                           </div>
+                          @error('phone')
+                              <div class="invalid-feedback"> {{ $message }} </div>
+                          @enderror
                           <div class="col-md-6">
                             <label for="inputPassword4" class="form-label">date of birth</label>
                             <input type="date" class="form-control" id="inputPassword4" max="2004-01-01" name="date_of_birth">
-                          </div>                        
+                          </div>  
+                          @error('date_of_birth')
+                              <div class="invalid-feedback"> {{ $message }} </div>
+                          @enderror                      
                           <div class="col-md-4">
                             <label for="inputState" class="form-label">country</label>
                             <select class="form-select" id="country">
@@ -57,19 +72,23 @@
                             </div>
                             <div class="col-md-4">
                               <label for="inputState" class="form-label">city</label>
-                              <select  class="form-select" id="city" name="code_of_city">
-                                <option selected>Choose...</option>
-                                <option>...</option>
+                              <select  class="form-select" id="city" name="code_of_city">                                                 
                               </select>
                             </div>
+                            @error('code_of_city')
+                              <div class="invalid-feedback"> {{ $message }} </div>
+                          @enderror 
                             <div class="col-md-2">
                               <label for="inputZip" class="form-label">Dni</label>
                               <input type="text" class="form-control" id="inputZip" name="dni">
-                            </div>                           
+                            </div>   
+                            @error('dni')
+                              <div class="invalid-feedback"> {{ $message }} </div>
+                          @enderror                         
                          
                     </div>
                     <div class="card-footer" style="display: flex;justify-content:space-between;">
-                        <button type="reset" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="reset" class="btn btn-secondary" data-bs-dismiss="modal">Clear</button>
                         <button type="submit" class="btn btn-primary">Save changes</button>
                     </div>
                 </form>
