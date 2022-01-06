@@ -21,8 +21,9 @@ class UserController extends Controller
         return view('users.index');
     }
     public function create()
-    {
-        return view('users.create');
+    {   
+        $data['country']=DB::table('countries')->get();
+        return view('users.create',$data);
     }
     public function SendData(Request $request)
     {
@@ -51,12 +52,13 @@ class UserController extends Controller
            // 'date_of_birth'=>'required',
         //     'password'=>'required|confirmed',
         // ]);
+        dd($request->all());
         $users= New User();
         $users->name=$request->input('name');
         $users->email=$request->input('email');
         $users->phone=$request->input('phone');
         $users->dni=$request->input('dni');
-        //$users->code_of_city=$request->input('code_of_city');
+        $users->code_of_city=$request->input('code_of_city');
         $users->date_of_birth= $request->input('date_of_birth');
         $users->password=Hash::make($request->input('password'));
         $users->save();
@@ -119,5 +121,25 @@ class UserController extends Controller
         $user = User::findOrFail($id);
         $user->delete();
         return redirect()->back()->with('success', 'User Delete!');
+    }
+    public function getstate(Request $request)
+    {
+        $cid=$request->post('cid');
+        $state=DB::table('states')->where('country_id',$cid)->get();
+        $html='<option value=""></option>';
+        foreach ($state as $list) {
+            $html.='<option value="'.$list->id.'">'.$list->name.'</option>';
+        }
+        echo $html;
+    }
+    public function getcity(Request $request)
+    {
+        $sid=$request->post('sid');
+        $city=DB::table('cities')->where('state_id',$sid)->get();
+        $html='<option value=""></option>';
+        foreach ($city as $list) {
+            $html.='<option value="'.$list->id.'">'.$list->name.'</option>';
+        }
+        echo $html;
     }
 }

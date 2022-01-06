@@ -39,13 +39,25 @@
                             <label for="inputPassword4" class="form-label">date of birth</label>
                             <input type="date" class="form-control" id="inputPassword4" max="2004-01-01" name="date_of_birth">
                           </div>                        
-                            <div class="col-md-6">
-                              <label for="inputCity" class="form-label">Pais</label>
-                              <input type="text" class="form-control" id="inputCity" value="">
+                          <div class="col-md-4">
+                            <label for="inputState" class="form-label">country</label>
+                            <select class="form-select" id="country">
+                              <option selected>Choose...</option>
+                              @foreach ($country as $list)
+                                  <option value="{{$list->id}}">{{$list->name}}</option>
+                              @endforeach
+                            </select>
+                          </div>
+                            <div class="col-md-4">
+                              <label for="inputState" class="form-label">state</label>
+                              <select class="form-select" id="state">
+                                <option selected>Choose...</option>
+                                <option>...</option>
+                              </select>
                             </div>
                             <div class="col-md-4">
                               <label for="inputState" class="form-label">city</label>
-                              <select id="inputState" class="form-select">
+                              <select  class="form-select" id="city" name="code_of_city">
                                 <option selected>Choose...</option>
                                 <option>...</option>
                               </select>
@@ -67,7 +79,34 @@
 </div>
 @endsection
 @section('scripts')
-    
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script>
+  $(document).ready(function() {
+      jQuery("#country").change(function () {
+        let cid=jQuery(this).val()
+        $.ajax({
+            url:'{!!route('getstate')!!}',
+            type:'post',
+            data:'cid='+cid+'&_token={{csrf_token()}}',
+            success:function(response){
+              jQuery("#state").html(response)
+            }
+        });
+      });
+      jQuery("#state").change(function () {
+        let sid=jQuery(this).val()
+        $.ajax({
+            url:'{!!route('getcity')!!}',
+            type:'post',
+            data:'sid='+sid+'&_token={{csrf_token()}}',
+            success:function(response){
+              jQuery("#city").html(response)
+            }
+        });
+      })          
+   });
+
+</script>
 @if ($message = Session::get('success'))
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>

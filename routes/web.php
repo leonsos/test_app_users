@@ -31,6 +31,8 @@ Route::middleware('auth')->group(function () {
     Route::get('users/delete/{user}', [\App\Http\Controllers\UserController::class, 'delete'])->name('users.delete');
     Route::get('dataTableUser', [\App\Http\Controllers\UserController::class, 'datatables'])->name('dataTableUser');    
     Route::get('dataTableMails', [\App\Http\Controllers\UserController::class, 'datatablesMails'])->name('dataTableMails');    
+    Route::post('getState', [\App\Http\Controllers\UserController::class, 'getstate'])->name('getstate');    
+    Route::post('getCitytate', [\App\Http\Controllers\UserController::class, 'getcity'])->name('getcity');    
 });
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home')->middleware('isAdmin');
