@@ -3,6 +3,7 @@
 @section('css')
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/dataTables.bootstrap5.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 @endsection
 
 @section('content')
@@ -16,14 +17,15 @@
             <table class="table table-hover" id="users">
                 <thead>
                     <tr>
+                        <th class="border-gray-200">{{ __('Id') }}</th>
                         <th class="border-gray-200">{{ __('Name') }}</th>
-                        <th class="border-gray-200">{{ __('contact') }}</th>
-                        <th class="border-gray-200">{{ __('subject') }}</th>
-                        <th class="border-gray-200">{{ __('body') }}</th>
-                        <th></th>                        
+                        <th class="border-gray-200">{{ __('Contact') }}</th>
+                        <th class="border-gray-200">{{ __('Subject') }}</th>
+                        <th class="border-gray-200">{{ __('Body') }}</th>
+                        <th>&nbsp;</th>                        
                     </tr>
                 </thead> 
-                <tbody>
+                {{-- <tbody>
                     @foreach ($getData as $data)
                         <tr>
                             <td><span class="fw-normal">{{ $data->name }}</span></td>
@@ -40,7 +42,7 @@
                             </td>                          
                         </tr>
                     @endforeach
-                </tbody>               
+                </tbody>                --}}
             </table>
             {{-- <div
                 class="card-footer px-3 border-0 d-flex flex-column flex-lg-row align-items-center justify-content-between">
@@ -48,7 +50,7 @@
             </div> --}}
         </div>
     </div>
-    @include('modalAdd')
+    {{-- @include('modalAdd') --}}
 @endsection
 
 @section('scripts')
@@ -57,8 +59,24 @@
    <script src="https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap5.min.js"></script>
    <script>
        $(document).ready(function() {
-            $('#users').DataTable();           
-        });
+            $('#users').DataTable({
+                processing:true,
+                serverSider:true,
+                ajax:'{!!route('dataTableMails')!!}',
+                columns:[
+                    {data:'id'},
+                    {data:'name'},
+                    {data:'contact'},
+                    {data:'subject'},
+                    {data:'body'},
+                    {data:'btn'},                                     
+                    // {data:'code_of_city'},
+                    // {data:'date_of_birth'},                    
+                    // {data:'delete'},                                     
+                ]
+            });           
+        });           
+        
 
    </script>
    @if ($message = Session::get('success'))

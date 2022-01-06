@@ -20,16 +20,16 @@ Route::get('/simpleuser', function () {
     return view('simpleuser');
 });
 Auth::routes();
-Route::middleware('auth')->group(function () {
-    //Route::view('about', 'about')->name('about');
-
+Route::middleware('auth')->group(function () {    
     Route::get('users', [\App\Http\Controllers\UserController::class, 'index'])->name('users.index');
     Route::post('users/add', [\App\Http\Controllers\UserController::class, 'store'])->name('users.store');
     Route::post('users/send', [\App\Http\Controllers\UserController::class, 'SendData'])->name('users.senddata');
     Route::get('users/data', [\App\Http\Controllers\UserController::class, 'getDataUserMail'])->name('users.userdata');
-
-    // Route::get('profile', [\App\Http\Controllers\ProfileController::class, 'show'])->name('profile.show');
-    // Route::put('profile', [\App\Http\Controllers\ProfileController::class, 'update'])->name('profile.update');
+    Route::post('users/update/{user}', [\App\Http\Controllers\UserController::class, 'update'])->name('users.update');
+    Route::get('users/edit/{user}', [\App\Http\Controllers\UserController::class, 'edit'])->name('users.edit');
+    Route::get('users/delete/{user}', [\App\Http\Controllers\UserController::class, 'delete'])->name('users.delete');
+    Route::get('dataTableUser', [\App\Http\Controllers\UserController::class, 'datatables'])->name('dataTableUser');    
+    Route::get('dataTableMails', [\App\Http\Controllers\UserController::class, 'datatablesMails'])->name('dataTableMails');    
 });
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home')->middleware('isAdmin');

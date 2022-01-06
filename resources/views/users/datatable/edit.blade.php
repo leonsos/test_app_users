@@ -1,0 +1,1 @@
+<a  class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModalEdit{{$id}}"><i class="fa fa-pencil" aria-hidden="true"></i></a>

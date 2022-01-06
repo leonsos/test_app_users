@@ -3,6 +3,7 @@
 @section('css')
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/dataTables.bootstrap5.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 @endsection
 
 @section('content')
@@ -12,31 +13,20 @@
                 <h2 class="mb-4 h5">{{ __('Users') }}</h2>
                 <button type="button" class="btn btn-primary mb-4" data-bs-toggle="modal" data-bs-target="#exampleModal">Create</button>           
             </div>
-
             <table class="table table-hover" id="users">
                 <thead>
                     <tr>
+                        <th class="border-gray-200">{{ __('Id') }}</th>
                         <th class="border-gray-200">{{ __('Name') }}</th>
                         <th class="border-gray-200">{{ __('Email') }}</th>
-                        <th></th>                        
+                        <th class="border-gray-200">{{ __('Dni') }}</th>
+                        <th class="border-gray-200">{{ __('Phone') }}</th>
+                        <th class="border-gray-200">{{ __('City') }}</th>
+                        <th class="border-gray-200">{{ __('Date birth') }}</th>                        
+                        <th>&nbsp;</th>                        
+                                               
                     </tr>
-                </thead> 
-                <tbody>
-                    @foreach ($users as $user)
-                        <tr>
-                            <td><span class="fw-normal">{{ $user->name }}</span></td>
-                            <td><span class="fw-normal">{{ $user->email }}</span></td>
-                            <td>
-                                <form action="#" method="post">
-                                    <a href="" class="btn btn-primary btn-sm">Edit</a>
-                                    @csrf
-                                    @method('DELETE')
-                                    <input type="submit" value="Delete" class="btn btn-danger btn-sm">
-                                </form>
-                            </td>                          
-                        </tr>
-                    @endforeach
-                </tbody>               
+                </thead>                                 
             </table>
             {{-- <div
                 class="card-footer px-3 border-0 d-flex flex-column flex-lg-row align-items-center justify-content-between">
@@ -44,6 +34,7 @@
             </div> --}}
         </div>
     </div>
+    {{-- @include('modalEdit') --}}
     @include('modalAdd')
 @endsection
 
@@ -53,7 +44,22 @@
    <script src="https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap5.min.js"></script>
    <script>
        $(document).ready(function() {
-            $('#users').DataTable();           
+            $('#users').DataTable({
+                processing:true,
+                serverSider:true,
+                ajax:'{!!route('dataTableUser')!!}',
+                columns:[
+                    {data:'id'},
+                    {data:'name'},
+                    {data:'email'},
+                    {data:'dni'},
+                    {data:'phone'},
+                    {data:'code_of_city'},
+                    {data:'date_of_birth'},                    
+                    {data:'btn'},                                     
+                    // {data:'delete'},                                     
+                ]
+            });           
         });
 
    </script>
