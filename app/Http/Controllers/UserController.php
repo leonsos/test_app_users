@@ -20,6 +20,10 @@ class UserController extends Controller
     {        
         return view('users.index');
     }
+    public function create()
+    {
+        return view('users.create');
+    }
     public function SendData(Request $request)
     {
         $this->validate($request,[
@@ -38,25 +42,26 @@ class UserController extends Controller
     }
     public function store(Request $request)
     {
-        $this->validate($request,[
-            'name'=>'required',
-            'email'=>'required|email',
-            'phone'=>'required',
-            'dni'=>'required|number',
-            'code_of_city'=>'required',
-            // 'date_of_birth'=>'required',
-            'password'=>'required|confirmed',
-        ]);
+        // $this->validate($request,[
+        //     'name'=>'required',
+        //     'email'=>'required|email',
+        //     'phone'=>'required',
+        //     'dni'=>'required',
+        //     //'code_of_city'=>'required',
+           // 'date_of_birth'=>'required',
+        //     'password'=>'required|confirmed',
+        // ]);
         $users= New User();
         $users->name=$request->input('name');
         $users->email=$request->input('email');
         $users->phone=$request->input('phone');
         $users->dni=$request->input('dni');
-        $users->code_of_city=$request->input('code_of_city');
+        //$users->code_of_city=$request->input('code_of_city');
         $users->date_of_birth= $request->input('date_of_birth');
         $users->password=Hash::make($request->input('password'));
         $users->save();
-        return redirect()->back()->with('success', 'User created succesfully');
+        return redirect()->route('users.index')->with('success', 'User created succesfully.');
+        //return redirect()->back()->with('success', 'User created succesfully');
     }
     public function getDataUserMail()
     {
@@ -92,9 +97,9 @@ class UserController extends Controller
     }
     public function datatables()
     {        
-        return Datatables::of(User::select('id','name','email','dni','phone','code_of_city','date_of_birth','created_at'))
-            ->editColumn('created_at',function(User $user){
-                return $user->created_at->diffForHumans();
+        return Datatables::of(User::select('id','name','email','dni','phone','code_of_city','date_of_birth'))
+            ->editColumn('date_of_birth',function(User $user){                
+                return Carbon::parse($user->date_of_birth)->age;
             })     
             ->addColumn('btn','users.datatable.btn')
             ->rawColumns(['btn'])

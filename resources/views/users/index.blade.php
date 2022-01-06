@@ -11,7 +11,7 @@
         <div class="card card-body border-0 shadow table-wrapper table-responsive"  style="padding:1.25rem;">
             <div class="text-button" style="display: flex;justify-content:space-between;">
                 <h2 class="mb-4 h5">{{ __('Users') }}</h2>
-                <button type="button" class="btn btn-primary mb-4" data-bs-toggle="modal" data-bs-target="#exampleModal">Create</button>           
+                <a href="{{route('users.create')}}" class="btn btn-primary mb-4" ><i class="fas fa-user-plus"></i></a>           
             </div>
             <table class="table table-hover" id="users">
                 <thead>
@@ -22,7 +22,7 @@
                         <th class="border-gray-200">{{ __('Dni') }}</th>
                         <th class="border-gray-200">{{ __('Phone') }}</th>
                         <th class="border-gray-200">{{ __('City') }}</th>
-                        <th class="border-gray-200">{{ __('Date birth') }}</th>                        
+                        <th class="border-gray-200">{{ __('Age') }}</th>                        
                         <th>&nbsp;</th>                        
                                                
                     </tr>
