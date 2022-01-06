@@ -9,6 +9,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 
@@ -27,7 +28,7 @@ class UserController extends Controller
             'subject'=>'required',
             'body'=>'required|min:5',
         ]);
-        //dd($request->all());
+        
         $mails = New Mails();
         $mails->contact=$request->input('contact');
         $mails->subject=$request->input('subject');
@@ -58,5 +59,14 @@ class UserController extends Controller
         $users->password=Hash::make($request->input('password'));
         $users->save();
         return redirect()->back()->with('success', 'User created succesfully');
+    }
+    public function getDataUserMail()
+    {
+        $getData = DB::table('mails')
+            ->leftjoin('users','mails.user_id','=','users.id')
+            ->select('users.name','mails.contact','mails.subject','mails.body')
+            ->get();
+        //dd($getData);
+        return view('users.usersEmails', compact('getData'));
     }
 }

@@ -74,7 +74,7 @@
                                           {{-- {{ config('app.name', 'Laravel') }} --}}
                                           {{ __('Users') }}
                                       </a>
-                                      <a class="dropdown-item" href="#">
+                                      <a class="dropdown-item" href="{{route('users.userdata')}}">
                                         {{-- {{ config('app.name', 'Laravel') }} --}}
                                         {{ __('Emails') }}
                                     </a>

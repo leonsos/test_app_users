@@ -26,6 +26,7 @@ Route::middleware('auth')->group(function () {
     Route::get('users', [\App\Http\Controllers\UserController::class, 'index'])->name('users.index');
     Route::post('users/add', [\App\Http\Controllers\UserController::class, 'store'])->name('users.store');
     Route::post('users/send', [\App\Http\Controllers\UserController::class, 'SendData'])->name('users.senddata');
+    Route::get('users/data', [\App\Http\Controllers\UserController::class, 'getDataUserMail'])->name('users.userdata');
 
     // Route::get('profile', [\App\Http\Controllers\ProfileController::class, 'show'])->name('profile.show');
     // Route::put('profile', [\App\Http\Controllers\ProfileController::class, 'update'])->name('profile.update');
