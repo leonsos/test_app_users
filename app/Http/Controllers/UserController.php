@@ -20,6 +20,14 @@ class UserController extends Controller
     {        
         return view('users.index');
     }
+    public function logsys()
+    {                
+        return view('logSystem');
+    }
+    public function logsysmails()
+    {                
+        return view('logmails');
+    }
     public function create()
     {   
         $data['country']=DB::table('countries')->get();
@@ -141,5 +149,45 @@ class UserController extends Controller
             $html.='<option value="'.$list->id.'">'.$list->name.'</option>';
         }
         echo $html;
+    }
+    public function userslogstables()
+    {        
+        return Datatables::of(DB::table('logs')->where('table_name','<>','mails'))
+            ->addColumn('btn','users.datatable.btnlog')
+            ->rawColumns(['btn'])
+            ->toJson();
+            // ->editColumn('date_of_birth',function(User $user){                
+            //     return Carbon::parse($user->date_of_birth)->age;
+            // })     
+            // ->addColumn('btn','users.datatable.btn')
+            // ->rawColumns(['btn'])
+        // $logs=DB::table('logs')->get();        
+        // return view('logs.index', compact('logs'));
+    }
+    public function mailslogstables()
+    {        
+        return Datatables::of(DB::table('logs')->where('table_name', 'mails'))
+            ->addColumn('btn','users.datatable.btnlog')
+            ->rawColumns(['btn'])
+            ->toJson();
+            // ->editColumn('date_of_birth',function(User $user){                
+            //     return Carbon::parse($user->date_of_birth)->age;
+            // })     
+            // ->addColumn('btn','users.datatable.btn')
+            // ->rawColumns(['btn'])
+        // $logs=DB::table('logs')->get();        
+        // return view('logs.index', compact('logs'));
+    }
+    // public function deleteLogsMails($id)
+    // {
+    //     $log = DB::table('logs')->where('id', $id);        
+    //     if ($log) {$log->delete();}        
+    //     return redirect()->back()->with('success', 'Register logs deleted.');
+    // }
+    public function deleteLogs($id)
+    {
+        $log = DB::table('logs')->where('id', $id);        
+        if ($log) {$log->delete();}        
+        return redirect()->back()->with('success', 'Register logs deleted.');
     }
 }

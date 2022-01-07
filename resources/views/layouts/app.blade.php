@@ -77,7 +77,15 @@
                                       <a class="dropdown-item" href="{{route('users.userdata')}}">
                                         {{-- {{ config('app.name', 'Laravel') }} --}}
                                         {{ __('Emails') }}
-                                    </a>
+                                       </a>
+                                       <a class="dropdown-item" href="{{route('log.index')}}">
+                                        {{-- {{ config('app.name', 'Laravel') }} --}}
+                                        {{ __('Log users') }}
+                                        </a>
+                                        <a class="dropdown-item" href="{{route('logmails.index')}}">
+                                            {{-- {{ config('app.name', 'Laravel') }} --}}
+                                            {{ __('Log Mails') }}
+                                        </a>
                                   @endif
                                 </div>
                             </li>
