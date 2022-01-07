@@ -41,54 +41,39 @@
                           <div class="col-md-6">
                             <label for="inputPassword4" class="form-label">date of birth</label>
                             <input type="date" class="form-control" id="inputPassword4" max="2004-01-01" value="{{$users->date_of_birth}}" name="date_of_birth">
+                          </div>                        
+                          <div class="col-md-4">
+                            <label for="inputState" class="form-label">country</label>
+                            <select class="form-select" id="country">
+                              <option selected>Choose...</option>
+                              @foreach ($country as $list)
+                                  <option value="{{$list->id}}">{{$list->name}}</option>
+                              @endforeach
+                            </select>
                           </div>
-                        {{-- @endforeach --}}
-                            {{-- <div class="col-12">
-                              <label for="inputAddress" class="form-label">Address</label>
-                              <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St">
-                            </div>
-                            <div class="col-12">
-                              <label for="inputAddress2" class="form-label">Address 2</label>
-                              <input type="text" class="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor">
-                            </div> --}}
-                            <div class="col-md-6">
-                              <label for="inputCity" class="form-label">Pais</label>
-                              <input type="text" class="form-control" id="inputCity" value="">
-                            </div>
                             <div class="col-md-4">
-                              <label for="inputState" class="form-label">city</label>
-                              <select id="inputState" class="form-select">
+                              <label for="inputState" class="form-label">state</label>
+                              <select class="form-select" id="state">
                                 <option selected>Choose...</option>
                                 <option>...</option>
                               </select>
                             </div>
+                            <div class="col-md-4">
+                              <label for="inputState" class="form-label">city</label>
+                              <select  class="form-select" id="city" name="code_of_city" > 
+                                <option>{{$users->code_of_city}}</option>                                   
+                              </select>
+                            </div>
+                            @error('code_of_city')
+                              <div class="invalid-feedback"> {{ $message }} </div>
+                          @enderror 
                             <div class="col-md-2">
                               <label for="inputZip" class="form-label">Dni</label>
-                              <input type="text" class="form-control" id="inputZip" readonly value="{{$users->dni}}" name="dni">
-                            </div>
-                            
-                          {{-- </form> --}}
-                        {{-- <div class="mb-3">
-                            <label for="exampleFormControlInput1" class="form-label">Contact</label>
-                            <input type="email" class="form-control @error('contact') is-invalid @enderror" id="exampleFormControlInput1" placeholder="name@example.com" name="contact">
-                        </div>
-                        @error('date_of_birth')
-                            <div class="invalid-feedback"> {{ $message }} </div>
-                        @enderror
-                        <div class="mb-3">
-                            <label for="exampleFormControlInput1" class="form-label">Subject</label>
-                            <input type="text" class="form-control @error('subject') is-invalid @enderror" id="exampleFormControlInput1" placeholder="Send my CV" name="subject">
-                        </div>
-                        @error('date_of_birth')
-                            <div class="invalid-feedback"> {{ $message }} </div>
-                        @enderror
-                        <div class="mb-3">
-                            <label for="exampleFormControlTextarea1" class="form-label">Body message</label>
-                            <textarea class="form-control @error('body') is-invalid @enderror" id="exampleFormControlTextarea1" rows="3" placeholder="Hi uncle how are yo?" name="body"></textarea>
-                        </div>
-                        @error('date_of_birth')
-                            <div class="invalid-feedback"> {{ $message }} </div>
-                        @enderror --}}
+                              <input type="text" class="form-control" id="inputZip" name="dni" value="{{$users->dni}}">
+                            </div>   
+                            @error('dni')
+                              <div class="invalid-feedback"> {{ $message }} </div>
+                          @enderror                           
                     </div>
                     <div class="card-footer" style="display: flex;justify-content:space-between;">
                         <button type="reset" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -101,7 +86,34 @@
 </div>
 @endsection
 @section('scripts')
-    
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script>
+  $(document).ready(function() {
+      jQuery("#country").change(function () {
+        let cid=jQuery(this).val()
+        $.ajax({
+            url:'{!!route('getstate')!!}',
+            type:'post',
+            data:'cid='+cid+'&_token={{csrf_token()}}',
+            success:function(response){
+              jQuery("#state").html(response)
+            }
+        });
+      });
+      jQuery("#state").change(function () {
+        let sid=jQuery(this).val()
+        $.ajax({
+            url:'{!!route('getcity')!!}',
+            type:'post',
+            data:'sid='+sid+'&_token={{csrf_token()}}',
+            success:function(response){
+              jQuery("#city").html(response)
+            }
+        });
+      })          
+   });
+
+</script>    
 @if ($message = Session::get('success'))
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>

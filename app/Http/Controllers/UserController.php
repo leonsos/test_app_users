@@ -96,14 +96,15 @@ class UserController extends Controller
         $users->phone        = $request->input('phone');
         $users->code_of_city       = $request->input('code_of_city');
         $users->password = Hash::make($request->input('password'));
-        $users->save();  
-        // return redirect('users')->with('success', 'Profile updated.'); 
+        $users->update();  
+       
         return redirect()->route('users.index')->with('success', 'Profile updated.');
     }
     public function edit($id)
     {
         $users = User::findOrFail($id);
-        return view('users.edit',compact('users'));
+        $data['country']=DB::table('countries')->get();
+        return view('users.edit',$data,compact('users'));
     }
     public function datatables()
     {        
@@ -156,34 +157,15 @@ class UserController extends Controller
             ->addColumn('btn','users.datatable.btnlog')
             ->rawColumns(['btn'])
             ->toJson();
-            // ->editColumn('date_of_birth',function(User $user){                
-            //     return Carbon::parse($user->date_of_birth)->age;
-            // })     
-            // ->addColumn('btn','users.datatable.btn')
-            // ->rawColumns(['btn'])
-        // $logs=DB::table('logs')->get();        
-        // return view('logs.index', compact('logs'));
+            
     }
     public function mailslogstables()
     {        
         return Datatables::of(DB::table('logs')->where('table_name', 'mails'))
             ->addColumn('btn','users.datatable.btnlog')
             ->rawColumns(['btn'])
-            ->toJson();
-            // ->editColumn('date_of_birth',function(User $user){                
-            //     return Carbon::parse($user->date_of_birth)->age;
-            // })     
-            // ->addColumn('btn','users.datatable.btn')
-            // ->rawColumns(['btn'])
-        // $logs=DB::table('logs')->get();        
-        // return view('logs.index', compact('logs'));
-    }
-    // public function deleteLogsMails($id)
-    // {
-    //     $log = DB::table('logs')->where('id', $id);        
-    //     if ($log) {$log->delete();}        
-    //     return redirect()->back()->with('success', 'Register logs deleted.');
-    // }
+            ->toJson();           
+    }    
     public function deleteLogs($id)
     {
         $log = DB::table('logs')->where('id', $id);        
