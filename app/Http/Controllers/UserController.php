@@ -108,7 +108,7 @@ class UserController extends Controller
     }
     public function datatables()
     {        
-        return Datatables::of(User::select('id','name','email','dni','phone','code_of_city','date_of_birth'))
+        return Datatables::of(User::select('id','name','email','dni','phone','code_of_city','date_of_birth')->where('id','<>','1'))
             ->editColumn('date_of_birth',function(User $user){                
                 return Carbon::parse($user->date_of_birth)->age;
             })     
