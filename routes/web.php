@@ -20,7 +20,7 @@ Route::get('/simpleuser', function () {
     return view('simpleuser');
 });
 Auth::routes();
-Route::middleware('auth')->group(function () {    
+Route::middleware(['auth','isAdmin'])->group(function () {    
     Route::get('log', [\App\Http\Controllers\UserController::class, 'logsys'])->name('log.index');
     Route::get('logmails', [\App\Http\Controllers\UserController::class, 'logsysmails'])->name('logmails.index');
     Route::get('users', [\App\Http\Controllers\UserController::class, 'index'])->name('users.index');
