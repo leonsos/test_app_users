@@ -19,7 +19,7 @@
                             <th scope="col">#Id</th>
                             <th scope="col">user id</th>
                             <th scope="col">Log date</th>
-                            <th scope="col">table</th>
+                            <th scope="col">tables</th>
                             <th scope="col">type</th>
                             <th></th>
                           </tr>
